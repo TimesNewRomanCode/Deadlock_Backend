@@ -1,12 +1,17 @@
+from fastapi import FastAPI
+from db_utils import SendHeroInfo, SendItemsInfo, SendMapInfo
 
+app = FastAPI()
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+@app.get("/Hero")
+def HeroInfoGet():
+    return {"data": SendHeroInfo()}
 
+@app.get("/Items")
+def ItemsInfoGet():
+    return {"data": SendItemsInfo()}
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+@app.get("/Map")
+def MapInfoGet():
+    return {"data": SendMapInfo()}
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
