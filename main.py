@@ -1,9 +1,7 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from db_utils import SendHeroInfo, SendItemsInfo, SendMapInfo
-from typing import List
-import json
 import psycopg2
-from pydantic import BaseModel
+from models import HeroInfo, ItemInfo, MapInfo
 
 conn = psycopg2.connect(
         dbname="verceldb",
@@ -29,28 +27,6 @@ def ItemsInfoGet():
 def MapInfoGet():
     return {"data": SendMapInfo()}
 
-class HeroInfo(BaseModel):
-    id: int
-    name: str
-    text: str
-    img: str
-    DPS: str
-    BulletDamage: str
-    Ammo: str
-    BulletPerSec: str
-    ReloadTime: str
-    BulletVelocity: str
-    LightMelee: str
-    HeavyMelee: str
-    FalloffRange: str
-    Health: str
-    HealthRegen: str
-    BulletResist: str
-    SpiritResist: str
-    MoveSpeed: str
-    SprintSpeed: str
-    Stamina: str
-
 @app.post("/Heroes")
 async def create_hero(hero: HeroInfo):
     insert_query = """INSERT INTO Hero (id, name, text, img, DPS, BulletDamage, Ammo, BulletPerSec, ReloadTime, BulletVelocity, LightMelee, HeavyMelee, FalloffRange, Health, HealthRegen, BulletResist, SpiritResist, MoveSpeed, SprintSpeed, Stamina)
@@ -58,16 +34,7 @@ async def create_hero(hero: HeroInfo):
     cur.execute(insert_query,
                 (hero.id, hero.name, hero.text, hero.img, hero.DPS, hero.BulletDamage, hero.Ammo, hero.BulletPerSec, hero.ReloadTime, hero.BulletVelocity, hero.LightMelee, hero.HeavyMelee, hero.FalloffRange, hero.Health, hero.HealthRegen, hero.BulletResist, hero.SpiritResist, hero.MoveSpeed, hero.SprintSpeed, hero.Stamina))
     conn.commit()
-
-class ItemInfo(BaseModel):
-    id: int
-    name: str
-    price: str
-    text: str
-    img: str
-    effect: str
-    effectTextP: str
-    effectTextA: str
+    return hero
 
 @app.post("/Items")
 async def create_item(item: ItemInfo):
@@ -77,18 +44,16 @@ async def create_item(item: ItemInfo):
     cur.execute(insert_query,
                 (item.id, item.name, item.price, item.text, item.img, item.effect, item.effectTextP, item.effectTextA))
     conn.commit()
-
-    print(item)
     return item
 
+@app.post("/Maps")
+async def create_map(map_info: MapInfo):
+    insert_query = """INSERT INTO Map (id, name, text, img)
+                      VALUES (%s, %s, %s, %s);"""
+
+    cur.execute(insert_query, (map_info.id, map_info.name, map_info.text, map_info.img))
+    conn.commit()
+    return map_info
 
 # uvicorn main:app --reload
-
-
-
-
-
-git init
-git remote add origin https://github.com/TimesNewRomanCode/Deadlock_Backend.git
-git checkout main
-git push -u origin maingi
+# git push -u origin main
