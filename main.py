@@ -55,5 +55,16 @@ async def create_map(map_info: MapInfo):
     conn.commit()
     return map_info
 
+@app.post("/HeroesUP/{id}")
+async def update_hero(id: int, hero: HeroInfo):
+    update_query = """UPDATE Hero 
+                      SET name = %s, text = %s, img = %s, DPS = %s, BulletDamage = %s, Ammo = %s, BulletPerSec = %s, ReloadTime = %s, BulletVelocity = %s, LightMelee = %s, HeavyMelee = %s, FalloffRange = %s, Health = %s, HealthRegen = %s, BulletResist = %s, SpiritResist = %s, MoveSpeed = %s, SprintSpeed = %s, Stamina = %s 
+                      WHERE id = %s;"""
+    cur.execute(update_query,
+                (hero.name, hero.text, hero.img, hero.DPS, hero.BulletDamage, hero.Ammo, hero.BulletPerSec, hero.ReloadTime, hero.BulletVelocity, hero.LightMelee, hero.HeavyMelee, hero.FalloffRange, hero.Health, hero.HealthRegen, hero.BulletResist, hero.SpiritResist, hero.MoveSpeed, hero.SprintSpeed, hero.Stamina, id))
+    conn.commit()
+    return hero
+
 # uvicorn main:app --reload
+# git commit -m "Commit message"
 # git push -u origin main
