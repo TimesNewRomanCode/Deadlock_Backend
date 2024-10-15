@@ -16,6 +16,7 @@ MapInfo = []
 
 cur.execute("SELECT * FROM Hero")
 row = cur.fetchone()
+
 def SendHeroInfo():
     Hero = {
         "id": row[0],
@@ -40,7 +41,9 @@ def SendHeroInfo():
         "Stamina": row[19]
     }
     HeroInfo.append(Hero)
+    print(HeroInfo)
     return HeroInfo
+
 
 def SendItemsInfo():
     Items = {
