@@ -13,7 +13,7 @@ cur = conn.cursor()
 create_table_query_1 = """CREATE TABLE Hero (
                          id SERIAL PRIMARY KEY,
                          name VARCHAR(50),
-                         text VARCHAR(50),
+                         text VARCHAR(200),
                          img VARCHAR(50),
                          DPS VARCHAR(50),
                          BulletDamage VARCHAR(50),
