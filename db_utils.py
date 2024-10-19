@@ -9,7 +9,6 @@ conn = psycopg2.connect(
     )
 cur = conn.cursor()
 
-
 HeroInfo = []
 ItemsInfo = []
 MapInfo = []
