@@ -49,7 +49,7 @@ cur.execute(create_table_query_2)
 create_table_query_3 = """CREATE TABLE Map (
                          id SERIAL PRIMARY KEY,
                          name VARCHAR(50),
-                         text VARCHAR(50),
+                         text VARCHAR(40),
                          img VARCHAR(50)                                
                      );"""
 cur.execute(create_table_query_3)
