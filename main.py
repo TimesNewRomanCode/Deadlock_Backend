@@ -107,7 +107,7 @@ async def delete_maps(id: int):
     delete_query = """DELETE FROM Map WHERE id = %s;"""
     cur.execute(delete_query, (id,))
     conn.commit()
-    return "Строка удалена "
+    return "Строка удалена"
 
 # uvicorn main:app --reload
 # git commit -m "Commit message"
